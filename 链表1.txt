@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define Len sizeof(struct stu)
+struct stu
+{
+    int num;
+    struct stu *top;
+    struct stu *next;
+}*head,*p1,*p2;
+
+void create()//
+{
+    struct stu *a1,*a2;
+    head=(struct stu *)malloc(Len);
+    head->num=0;
+    a1=a2=(struct stu *)malloc(Len);
+    head->next=a1;
+    a1->top=head;
+    scanf ("%d",&a1->num);
+    while (a1->num != 0)
+    {
+        a1=(struct stu *)malloc(Len);
+        scanf ("%d",&a1->num);
+        a2->next=a1;
+        a1->top=a2;
+        a2=a1;
+    }
+    //printf("**********\n");
+    head=a2->top;
+    //put();
+}
+void put()
+{
+    struct stu *p;
+    p=head;
+    while (p->num != 0)
+    {
+        printf("%d ",p->num);
+        p=p->top;
+    }
+    printf("\n\n");
+}
+int main()
+{
+    struct stu *a1,*a2,*a3;
+    create();    p1=head;
+    create();    p2=head;
+    a1=p1;     a2=p2;
+    if (a1->num <= a2->num)
+    {
+        a3=a1;
+        head=a1;
+        a1=a1->top;
+    }
+    else
+        {
+            a3=a2;
+            head=a2;
+            a2=a2->top;
+        }
+
+    while (a1->num != 0 && a2->num !=0)
+    {
+        if (a2->num <= a1->num)
+        {
+            a3->top=a2;
+            a3=a2;
+            if (a1->num == a2->num)
+                a1=a1->top;
+            a2=a2->top;
+
+        }
+        else
+        {
+            a3->top=a1;
+            a3=a1;
+            a1=a1->top;//printf("**********\n");
+        }
+    }
+    while (a1->num!=0)
+    {
+        a3->top=a1;
+        a3=a1;
+        a1=a1->top;
+    }
+    while (a2->num!=0)
+    {
+        a3->top=a2;
+        a3=a2;
+        a2=a2->top;
+    }
+    put();
+    return 0;
+}

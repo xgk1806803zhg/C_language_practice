@@ -1,0 +1,190 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define Len sizeof(struct stu)
+struct stu
+{
+    int num;
+    struct stu *top;
+    struct stu *next;
+}*head,*p1,*p2;
+
+void create()//
+{
+    struct stu *a1,*a2;
+    head=(struct stu *)malloc(Len);
+    head->num=0;
+    a1=a2=(struct stu *)malloc(Len);
+    head->next=a1;
+    a1->top=head;
+    scanf ("%d",&a1->num);
+    while (a1->num != 0)
+    {
+        a1=(struct stu *)malloc(Len);
+        scanf ("%d",&a1->num);
+        a2->next=a1;
+        a1->top=a2;
+        a2=a1;
+    }
+    //printf("**********\n");
+    head=a2->top;
+    //put();
+}
+void put()
+{
+    struct stu *p;
+    p=head;
+    while (p->num != 0)
+    {
+        printf("%d ",p->num);
+        p=p->top;
+    }
+    printf("\n\n");
+}
+int main()
+{
+    struct stu *a1,*a2,*a3;
+    create();    p1=head;
+    create();    p2=head;
+    a1=p1;     a2=p2;
+    if (a1->num <= a2->num)
+    {
+        a3=a1;
+        head=a1;
+        a1=a1->top;
+    }
+    else
+        {
+            a3=a2;
+            head=a2;
+            a2=a2->top;
+        }
+
+    while (a1->num != 0 && a2->num !=0)
+    {
+        if (a2->num <= a1->num)
+        {
+            a3->top=a2;
+            a3=a2;
+            if (a1->num == a2->num)
+                a1=a1->top;
+            a2=a2->top;
+
+        }
+        else
+        {
+            a3->top=a1;
+            a3=a1;
+            a1=a1->top;//printf("**********\n");
+        }
+    }
+    while (a1->num!=0)
+    {
+        a3->top=a1;
+        a3=a1;
+        a1=a1->top;
+    }
+    while (a2->num!=0)
+    {
+        a3->top=a2;
+        a3=a2;
+        a2=a2->top;
+    }
+    put();
+    return 0;
+}
+
+¥á¨tÕÀ·Å¡«Çà´º ? 2019/4/12 0:37:26
+#include <stdio.h>
+#include <stdlib.h>
+#define Len sizeof(struct stu)
+struct stu
+{
+    int num;
+    struct stu *next;
+}*head,*h1,*h2;
+void create()
+{
+    struct stu *p1,*p2;
+    head=(struct stu *)malloc(Len);
+    p1=p2= (struct stu *)malloc(Len);
+    head->next = p1;
+    scanf ("%d",&p1->num);
+    while (p1->num!=0)
+    {
+        p1=(struct stu *)malloc(Len);
+        scanf("%d",&p1->num);
+        p2->next=p1;
+        p2=p1;
+    }
+}
+void fun()
+{
+    int ju=0;
+    struct stu *p1,*p2,*a,*lk;
+    p1=h1->next;
+    p2=h2->next;
+    while (p1->num!=0 && p2->num!=0)
+    {
+        if (p1->num >= p2->num)
+        {
+            a=p1;
+            p1=p1->next;
+            if (ju == 0)
+            {
+                head=h1;
+                lk=head->next;
+                ju++;
+                continue;
+            }
+            lk->next=a;
+            lk=a;
+            if (a->num == p2->num)
+                p2=p2->next;
+        }
+        else
+            {
+                a=p2;
+                p2=p2->next;
+                if (ju == 0)
+                {
+                    head=h2;
+                    lk=h2->next;
+                    ju++;
+                    continue;
+                }
+                lk->next=a;
+                lk=a;
+            }
+    }
+    while (p1->num != 0)
+    {
+        lk->next=p1;
+        p1=p1->next;
+    }
+    while (p2->num != 0)
+    {
+        lk->next=p2;
+        p2=p2->next;
+    }
+}
+void put()
+{
+    struct stu *p;
+    p=head->next;
+    while (p->num!=0)
+    {
+        printf ("%d ",p->num);
+        p=p->next;
+    }
+}
+int main()
+{
+    create();
+    h1=head;
+    create();
+    h2=head;
+    fun();
+    put();
+    //printf("Hello world!\n");
+    return 0;
+}

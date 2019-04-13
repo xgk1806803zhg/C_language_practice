@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define Len sizeof(struct stu)
+struct stu
+{
+    int num;
+    char name[10];
+    int score;
+    struct stu *next;
+}*head,*p1,*p2,*p;
+void printflist ()
+{
+    int i;
+    p1=head;
+    while (p1->num!=0)
+    {
+        printf("%d %s %d  ",p1->num,p1->name,p1->score);
+        p1=p1->next;
+    }
+    printf("\n\n");
+}
+void create ()
+{
+    p1=p2=head=(struct stu*)malloc(Len);
+    scanf ("%d%s %d",&p1->num,p1->name,&p1->score);
+    do
+    {
+        p1=(struct stu*)malloc(Len);
+        scanf ("%d%s %d",&p1->num,p1->name,&p1->score);
+        p2->next=p1;
+        p2=p1;
+    }
+    while (p1->num!=0);
+}
+void change (int nu, int sco,int n)
+{
+    int i=1;
+    p1=head;
+    while (i!=n)
+    {
+        p1=p1->next;
+        i++;
+    }
+    p1->num=nu;
+    p1->score=sco;
+}
+void add (int nu,char b[10], int sco)
+{
+    p1=p2=head;
+    int i=1;
+    while (p1->num!=nu)
+    {
+        p2=p1;
+        p1=p1->next;
+    }
+    p=(struct stu *)malloc(Len);
+    p->num=nu;
+    strcpy (p->name,b);
+    p->score=sco;
+    p->next=p1->next;
+    p1->next=p;
+}
+void delete1(int n)
+{
+    int i=1;
+    p2=p1=head;
+    while (i!=n)
+    {
+        p2=p1;
+        p1=p1->next;
+        i++;
+    }
+    p2->next=p1->next;
+}
+
+int main()
+{
+    char a[3]={"ab"};
+    create();
+    printflist();
+    delete1(4);
+    printflist();
+    change(2,25,5);
+    printflist();
+    add(3,a,35);
+    printflist();
+    return 0;
+}

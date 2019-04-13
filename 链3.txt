@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define Len sizeof(struct stu )
+struct stu
+{
+    int num;
+    struct stu *next;
+}*p1,*p2,*p3,*head;
+struct stu *create ()
+{
+    struct stu *p,*t,*p4;
+    p4=t=p=(struct stu *)malloc(Len);
+    scanf ("%d",&p->num);
+    while (p->num!=0)
+    {
+        p=(struct stu *)malloc(Len);
+        scanf ("%d",&p->num);
+        t->next=p;
+        t=p;
+    }
+    return p4;
+}
+void pri()
+{
+    struct stu *pp;
+    pp=head->next;
+    while (pp->num!=0)
+    {
+        printf("%d ",pp->num);
+        pp=pp->next;
+    }
+}
+int main()
+{
+    int ju=0;
+    head=(struct stu *)malloc(Len);
+    p1=create();
+    p2=create();
+
+    while(p1->num != 0 && p2->num != 0)
+    {
+        if(ju == 0)
+        {
+            if(p1->num >= p2->num)
+            {
+                p3=p1;
+                head->next=p1;
+                p1=p1->next;
+            }
+            else {p3=p2; head->next=p2;p2=p2->next;}
+            ju=1;
+        }
+        if (p1->num > p2->num)
+        {
+            p3->next=p1;
+            p3=p1;
+            p1=p1->next;
+        }
+        if (p1->num < p2->num)
+        {
+            p3->next = p2;
+            p3=p2;
+            p2=p2->next;
+        }
+        //printf("%d\n",p1->num);
+        if (p1->num == p2->num)
+        {
+            //printf("**********\n");
+            if (p1->next == p3->next)
+            {
+                //p1=p1->next;
+                p3->next = p2;
+                p3=p2;
+                p2=p2->next;
+            }
+            else
+            {
+                //p2=p2->next;
+                p3->next = p1;
+                p3=p1;
+                p1=p1->next;
+            }
+        }
+    }
+    while (p1->num!=0)
+    {
+        p3 -> next = p1;
+        p3=p1;
+        p1=p1->next;
+    }
+    while (p2->num!=0)
+    {
+        p3 -> next = p2;
+        p3=p2;
+        p2=p2->next;
+    }
+    pri();
+    return 0;
+}
